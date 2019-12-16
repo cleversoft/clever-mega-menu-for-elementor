@@ -5,7 +5,7 @@
  * Plugin URI:  https://cleveraddon.com/clever-mega-menu-for-elementor
  * Description: With ease of visual editing from Elementor Page Builder, Clever Mega Menu for Elementor helps you make stunning navigation menus easily without any coding knowledge. <a href="https://cleveraddon.com/clever-mega-menu-for-elementor">Documentation</a> | <a href="https://cleveraddon.com/clever-mega-menu-for-elementor">ChangeLogs</a></p>
  * Author:      CleverSoft
- * Version:     1.0.8
+ * Version:     1.0.9
  * Author URI:  http://zootemplate.com/
  * Text Domain: clever-mega-menu-for-elementor
  */
@@ -22,7 +22,7 @@ final class Plugin
      *
      * @var  string
      */
-    const VERSION = '1.0.8';
+    const VERSION = '1.0.9';
 
     /**
      * Settings key
@@ -220,6 +220,10 @@ final class Plugin
      */
     function _load_admin_assets($hook_suffix)
     {
+        if (is_customize_preview()) {
+            return;
+        }
+
         wp_enqueue_style('cleverfont');
         wp_enqueue_style('fontawesome');
 
