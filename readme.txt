@@ -4,13 +4,16 @@ License: GPLv2+
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: navigation menu, elementor, mega menu, flyout menu, wordpress mega menu
 Requires at least: 4.7
-Tested up to: 5.3
-Stable tag: 1.0.8
+Tested up to: 5.3.1
+Stable tag: 1.0.9
 
 
 == Description ==
 
-PLEASE DO NOT ASK FOR MAKING THIS PLUGIN TO WORK WITH ELEMENTOR PRO! The Nav Menu widget of Elementor Pro is not structured and styled for mega menus. We also SHOULD NOT override behaviors of Elementor Pro widgets. This plugin has its own widget and behaviors.
+PLEASE DO NOT ASK FOR MAKING THIS PLUGIN TO WORK WITH ELEMENTOR PRO'S NAV MENU WIDGET!
+
+The Nav Menu widget of Elementor Pro is not designed for mega menus. We also SHOULD NOT override behaviors of Elementor Pro widgets. This plugin has its own widget and behaviors.
+
 
 Even though this plugin is easy to use, we can't guarantee rendered menu layout will fit any theme because we can't control every single CSS rule of themes and other plugins. This plugin is just a tool for theme designers and theme developers.
 
