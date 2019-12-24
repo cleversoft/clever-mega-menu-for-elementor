@@ -37,7 +37,7 @@ final class MenuThemeMeta
         'general_mobile_breakpoint'                     => 992,
         'menubar_style'                                 => 'horizontal',
         'menubar_vertical_width'                        => 260,
-        'menubar_horizontal_layout'                     => 'horizontal-align-left',
+        'menubar_horizontal_layout'                     => 'horizontal-align-right',
         'menubar_menu_height'                           => 60,
         'menubar_margin_top'                            => 0,
         'menubar_margin_right'                          => 0,
@@ -212,6 +212,7 @@ final class MenuThemeMeta
         'mobile_menu_toggle_padding_right'              => 5,
         'mobile_menu_toggle_padding_bottom'             => 5,
         'mobile_menu_toggle_padding_left'               => 5,
+        'mobile_menu_toggle_align'               => 'flex-end',
         'mobile_menu_toggle_position_top'               => 20,
         'mobile_menu_toggle_position_right'             => 0,
         'mobile_menu_toggle_position_bottom'            => 0,
@@ -1983,8 +1984,7 @@ final class MenuThemeMeta
                 <td class="row-label"><?php _e( 'Off-Canvas Position', 'clever-mega-menu-for-elementor' ) ?></td>
                 <td>
 					<?php $selected = $this->get_value('mobile_offcanvas_position') ?>
-                    <select id="cmm4e-mobile-animation"
-                            name="<?php echo $this->get_field( 'mobile_offcanvas_position' ) ?>">
+                    <select name="<?php echo $this->get_field( 'mobile_offcanvas_position' ) ?>">
                         <option value="left" <?php selected( $selected, 'left' ) ?>><?php _e( 'Left', 'clever-mega-menu-for-elementor' ) ?></option>
                         <option value="right" <?php selected( $selected, 'right' ) ?>><?php _e( 'Right', 'clever-mega-menu-for-elementor' ) ?></option>
                     </select>
@@ -2147,7 +2147,7 @@ final class MenuThemeMeta
                     </label>
                 </td>
             </tr>
-            <tr id="mobile-toggle-position-row" class="last-row cmm4e-mobile-toggle-option-field cmm4e-toggle-field">
+            <tr class="cmm4e-mobile-toggle-option-field cmm4e-toggle-field">
                 <td class="row-label"><?php _e( 'Padding', 'clever-mega-menu-for-elementor' ) ?></td>
                 <td>
                     <label>
@@ -2177,6 +2177,20 @@ final class MenuThemeMeta
                                name="<?php echo $this->get_field('mobile_menu_toggle_padding_left') ?>"
                                value="<?php echo $this->get_value('mobile_menu_toggle_padding_left') ?>"><span
                                 class="unit">px</span>
+                    </label>
+                </td>
+            </tr>
+        <tr class="cmm4e-mobile-toggle-option-field cmm4e-toggle-field">
+                <td class="row-label"><?php esc_html_e('Align', 'clever-mega-menu-pro-for-elementor') ?></td>
+                <td>
+                    <label>
+						<?php $selected = $this->get_value('mobile_menu_toggle_align', false); ?>
+                        <select id="select-mobile_toggle_align" name="<?php echo $this->get_field('mobile_menu_toggle_align') ?>">
+                            <option value="flex-start" <?php selected($selected, 'flex-start') ?>><?php esc_html_e('Left', 'clever-mega-menu-pro-for-elementor') ?></option>
+                            <option value="center" <?php selected($selected, 'center') ?>><?php esc_html_e('Center', 'clever-mega-menu-pro-for-elementor') ?></option>
+                            <option value="flex-end" <?php selected($selected, 'flex-end') ?>><?php esc_html_e('Right', 'clever-mega-menu-pro-for-elementor') ?></option>
+                            <option value="custom" <?php selected($selected, 'custom') ?>><?php esc_html_e('Custom', 'clever-mega-menu-pro-for-elementor') ?></option>
+                        </select>
                     </label>
                 </td>
             </tr>
@@ -2878,9 +2892,20 @@ final class MenuThemeMeta
             }
             .cmm4e-wrapper-theme-{$post->post_name}{
                 .cmm4e-toggle-wrapper {
-                    display: block;
-                    margin: 0 {$meta['mobile_menu_toggle_position_right']}px 0 {$meta['mobile_menu_toggle_position_left']}px;
-                    .cmm4e-toggle {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    max-width: 100%;
+                    align-items: center;";
+                    if ($meta['mobile_menu_toggle_align'] !== 'custom') {
+                        $scss .= "justify-content:{$meta['mobile_menu_toggle_align']};";
+                    }
+                    $scss .= "
+                    .cmm4e-toggle {";
+                        if ($meta['mobile_menu_toggle_align'] === 'custom') {
+                            $scss .= "position:absolute;top: {$meta['mobile_menu_toggle_position_top']}; right: {$meta['mobile_menu_toggle_position_right']};bottom: {$meta['mobile_menu_toggle_position_bottom']};left: {$meta['mobile_menu_toggle_position_left']};";
+                        }
+                        $scss .= "
                         padding: {$meta['mobile_menu_toggle_padding_top']}px {$meta['mobile_menu_toggle_padding_right']}px {$meta['mobile_menu_toggle_padding_bottom']}px {$meta['mobile_menu_toggle_padding_left']}px;
                         line-height: {$meta['mobile_toggle_line_height']}px;
                         &.toggled-on {
@@ -2894,10 +2919,10 @@ final class MenuThemeMeta
                     }
                 }
                 &.cmm4e-container {
-                    position: static;";
-        if ('off-canvas' !== $meta['mobile_menu_style']) {
-            $scss .= "margin-top: {$meta['mobile_menu_toggle_position_top']}px;";
-        }
+                    position: relative;";
+        // if ('off-canvas' !== $meta['mobile_menu_style']) {
+        //     $scss .= "margin-top: {$meta['mobile_menu_toggle_position_top']}px;";
+        // }
         $scss .= "
                  }
             }
@@ -3178,6 +3203,10 @@ final class MenuThemeMeta
         $meta['mega_panel_heading_letter_spacing']   = isset($meta['mega_panel_heading_letter_spacing']) ? $this->get_letter_spacing_value($meta['mega_panel_heading_letter_spacing']) : 'normal';
         $meta['mobile_menu_toggle_text']             = isset($meta['mobile_menu_toggle_text']) ? $meta['mobile_menu_toggle_text'] : '';
         $meta['mobile_menu_disable_toggle']          = isset($meta['mobile_menu_disable_toggle']) ? $meta['mobile_menu_disable_toggle'] : 0;
+        $meta['mobile_menu_toggle_position_top'] = is_numeric($meta['mobile_menu_toggle_position_top']) ? intval($meta['mobile_menu_toggle_position_top']) . 'px' : 'auto';
+        $meta['mobile_menu_toggle_position_right'] = is_numeric($meta['mobile_menu_toggle_position_right']) ? intval($meta['mobile_menu_toggle_position_right']) . 'px' : 'auto';
+        $meta['mobile_menu_toggle_position_bottom'] = is_numeric($meta['mobile_menu_toggle_position_bottom']) ? intval($meta['mobile_menu_toggle_position_bottom']) . 'px' : 'auto';
+        $meta['mobile_menu_toggle_position_left'] = is_numeric($meta['mobile_menu_toggle_position_left']) ? intval($meta['mobile_menu_toggle_position_left']) . 'px' : 'auto';
         $meta['menubar_item_border_last_child']      = isset($meta['menubar_item_border_last_child']) ? $meta['menubar_item_border_last_child'] : 0;
         $meta['flyout_item_border_last_child']       = isset($meta['flyout_item_border_last_child']) ? $meta['flyout_item_border_last_child'] : 0;
         $meta['mega_panel_item_border_last_child']   = isset($meta['mega_panel_item_border_last_child']) ? $meta['mega_panel_item_border_last_child'] : 0;
