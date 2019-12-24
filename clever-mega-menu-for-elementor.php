@@ -51,6 +51,7 @@ final class Plugin
         add_action('admin_menu', [$this, '_remove_slugdiv_metabox'], PHP_INT_MAX);
         add_action('admin_enqueue_scripts', [$this, '_load_admin_assets'], PHP_INT_MAX);
         add_action('wp_enqueue_scripts', [$this, '_load_public_assets'], PHP_INT_MAX, 0);
+        add_action('elementor/widgets/widgets_registered', [$this, '_register_elementor_widgets']);
         add_action('elementor/editor/after_enqueue_scripts', [$this, '_load_elementor_assets'], PHP_INT_MAX);
         add_action('activate_clever-mega-menu-for-elementor/clever-mega-menu-for-elementor.php', [$this, '_activate']);
         add_action('deactivate_clever-mega-menu-for-elementor/clever-mega-menu-for-elementor.php', [$this, '_deactivate']);
@@ -157,6 +158,22 @@ final class Plugin
     }
 
     /**
+     * Register widgets for Elementor
+     *
+     * @internal Used as a callback
+     */
+    function _register_elementor_widgets($widget_manager)
+    {
+        if (!empty($GLOBALS['post']) && 'cmm4e_menu' === $GLOBALS['post']->post_type) {
+            return;
+        }
+
+        require __DIR__ . '/includes/elementor/widgets/cmm4e.php';
+
+        $widget_manager->register_widget_type(new Cmm4eElementorWidget());
+    }
+
+    /**
      * Register assets
      *
      * @internal    Used as a callback.
@@ -164,13 +181,13 @@ final class Plugin
     function _register_assets()
     {
         // Register stylesheets.
-        wp_register_style('fontawesome', CMM4E_URI . 'assets/vendor/font-awesome/font-awesome.min.css', [], '4.7.0');
+        wp_register_style('fontawesome47', CMM4E_URI . 'assets/vendor/font-awesome/font-awesome.min.css', [], '4.7.0');
         wp_register_style('cleverfont', CMM4E_URI . 'assets/vendor/cleverfont/style.min.css', [], '1.9');
         wp_register_style('spectrum', CMM4E_URI . 'assets/vendor/spectrum/spectrum.min.css', [], '1.8');
-        wp_register_style('cmm4e-nav-menu', CMM4E_URI . 'assets/backend/css/cmm4e-nav-menu.min.css', ['cleverfont', 'fontawesome'], self::VERSION);
-        wp_register_style('cmm4e-menu-theme', CMM4E_URI . 'assets/backend/css/cmm4e-menu-theme.min.css', ['cleverfont', 'fontawesome', 'spectrum'], self::VERSION);
-        wp_register_style('cmm4e-admin', CMM4E_URI . 'assets/backend/css/cmm4e-admin.min.css', ['cleverfont', 'fontawesome'], self::VERSION);
-        wp_register_style('cmm4e-default-skin-461836', CMM4E_URI . 'assets/frontend/css/default-skin.min.css', ['fontawesome', 'cleverfont'], self::VERSION);
+        wp_register_style('cmm4e-nav-menu', CMM4E_URI . 'assets/backend/css/cmm4e-nav-menu.min.css', ['cleverfont', 'fontawesome47'], self::VERSION);
+        wp_register_style('cmm4e-menu-theme', CMM4E_URI . 'assets/backend/css/cmm4e-menu-theme.min.css', ['cleverfont', 'fontawesome47', 'spectrum'], self::VERSION);
+        wp_register_style('cmm4e-admin', CMM4E_URI . 'assets/backend/css/cmm4e-admin.min.css', ['cleverfont', 'fontawesome47'], self::VERSION);
+        wp_register_style('cmm4e-default-skin-461836', CMM4E_URI . 'assets/frontend/css/default-skin.min.css', ['fontawesome47', 'cleverfont'], self::VERSION);
 
         // Register scripts.
         wp_register_script('spectrum', CMM4E_URI . 'assets/vendor/spectrum/spectrum.min.js', ['jquery-core'], '1.8', true);
@@ -225,7 +242,7 @@ final class Plugin
         }
 
         wp_enqueue_style('cleverfont');
-        wp_enqueue_style('fontawesome');
+        wp_enqueue_style('fontawesome47');
 
         wp_enqueue_style('cmm4e-admin');
         wp_enqueue_script('cmm4e-admin');
@@ -305,7 +322,7 @@ final class Plugin
                     $theme_css = $uploads['basedir'] . '/cmm4e/cmm4e-menu-skin-' . $name . '.min.css';
                     $theme_meta = (array)get_post_meta($object->ID, MenuThemeMeta::META_KEY, true);
                     if (file_exists($theme_css)) {
-                        wp_enqueue_style('cmm4e-menu-skin-' . $name, $uploads['baseurl'] . '/cmm4e/cmm4e-menu-skin-' . $name . '.min.css' , ['fontawesome', 'cleverfont'], self::VERSION);
+                        wp_enqueue_style('cmm4e-menu-skin-' . $name, $uploads['baseurl'] . '/cmm4e/cmm4e-menu-skin-' . $name . '.min.css' , ['fontawesome47', 'cleverfont'], self::VERSION);
                         if (!empty($theme_meta['custom_css'])) {
                             $custom_css = str_replace('{{CURRENT_MENU}}', '.cmm4e.cmm4e-theme-' . $name, $theme_meta['custom_css']);
                             wp_add_inline_style('cmm4e-menu-skin-' . $name, $custom_css);

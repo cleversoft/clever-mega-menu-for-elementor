@@ -8,90 +8,96 @@ use Elementor\Controls_Manager;
  */
 final class Cmm4eElementorWidget extends Widget_Base
 {
-	/**
-	 * Get widget name.
-	 *
-	 * Retrieve button widget name.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget name.
-	 */
-	public function get_name()
+    /**
+     * Get widget name.
+     *
+     * Retrieve button widget name.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget name.
+     */
+    public function get_name()
     {
-		return 'cmm4e-mega-menu';
-	}
+        return 'cmm4e-mega-menu';
+    }
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve button widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget title.
-	 */
-	public function get_title()
+    /**
+     * Get widget title.
+     *
+     * Retrieve button widget title.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget title.
+     */
+    public function get_title()
     {
-		return __( 'Clever Mega Menu', 'clever-mega-menu-for-elementor' );
-	}
+        return esc_html__('Clever Mega Menu', 'clever-mega-menu-for-elementor');
+    }
 
     /**
      * @return array
      */
-    function get_categories()
+    public function get_categories()
     {
-        return class_exists('\CleverAddonsForElementor') ? ['clever-elements'] : ['general'];
+        if (defined('ELEMENTOR_PRO_VERSION')) {
+            return ['theme-elements'];
+        } elseif (class_exists('\CleverAddonsForElementor', false)) {
+            return ['clever-elements'];
+        } else {
+            return ['general'];
+        }
     }
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve button widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return string Widget icon.
-	 */
-	public function get_icon()
+    /**
+     * Get widget icon.
+     *
+     * Retrieve button widget icon.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget icon.
+     */
+    public function get_icon()
     {
-		return 'eicon-menu-bar';
-	}
+        return 'eicon-nav-menu';
+    }
 
     /**
      * Register controls
      */
     protected function _register_controls()
     {
-		$this->start_controls_section(
-			'section_menu_content',
-			[
-				'label' => __( 'Menu Content', 'clever-mega-menu-for-elementor' ),
-			]
-		);
+        $this->start_controls_section(
+            'section_menu_content',
+            [
+                'label' => esc_html__('Menu Content', 'clever-mega-menu-for-elementor'),
+            ]
+        );
 
-		$this->add_control(
-			'menu_theme',
-			[
-				'label' => __( 'Menu Preset', 'clever-mega-menu-for-elementor' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => '',
-				'options' => $this->listMenuPresets()
-			]
-		);
+        $this->add_control(
+            'menu_theme',
+            [
+                'label' => esc_html__('Skin', 'clever-mega-menu-for-elementor'),
+                'type' => Controls_Manager::SELECT,
+                'default' => '',
+                'options' => $this->listMenuPresets()
+            ]
+        );
 
-		$this->add_control(
-			'menu_location',
-			[
-				'label' => __( 'Menu Location', 'clever-mega-menu-for-elementor' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => '',
-				'options' => get_registered_nav_menus()
-			]
-		);
+        $this->add_control(
+            'menu_location',
+            [
+                'label' => esc_html__('Location', 'clever-mega-menu-for-elementor'),
+                'type' => Controls_Manager::SELECT,
+                'default' => '',
+                'options' => get_registered_nav_menus()
+            ]
+        );
 
         $this->end_controls_section();
     }
@@ -113,7 +119,7 @@ final class Cmm4eElementorWidget extends Widget_Base
             }
             wp_nav_menu($this->parseNavMenuArgs($args));
         } else {
-            _e('No menu location selected.', 'clever-mega-menu-for-elementor');
+            esc_html_e('No menu location selected.', 'clever-mega-menu-for-elementor');
         }
     }
 
@@ -123,7 +129,7 @@ final class Cmm4eElementorWidget extends Widget_Base
     private function listMenuPresets()
     {
         $presets = [
-            'none' => __('None', 'clever-mega-menu-for-elementor')
+            'none' => esc_html__('None', 'clever-mega-menu-for-elementor')
         ];
 
         $posts = get_posts([
@@ -135,7 +141,7 @@ final class Cmm4eElementorWidget extends Widget_Base
 
         if (!empty($posts)) {
             foreach ($posts as $post) {
-                $presets[$post->post_name] = $post->post_title ? : __('Untitled Menu Skin', 'clever-mega-menu-for-elementor');
+                $presets[$post->post_name] = $post->post_title ? : esc_html__('Untitled Menu Skin', 'clever-mega-menu-for-elementor');
             }
         }
 
@@ -153,11 +159,11 @@ final class Cmm4eElementorWidget extends Widget_Base
         if (file_exists($theme_css)) {
             $inline_css = file_get_contents($theme_css);
             if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                    printf('<style media="all">%s</style>',$inline_css);
+                printf('<style media="all">%s</style>', $inline_css);
             } else {
                 if (!wp_style_is('cmm4e-menu-skin-' . $preset)) {
-                    add_action('wp_footer', function() use ($inline_css) {
-                        printf('<style media="all">%s</style>',$inline_css);
+                    add_action('wp_footer', function () use ($inline_css) {
+                        printf('<style media="all">%s</style>', $inline_css);
                     }, 10, 0);
                 }
             }
@@ -203,12 +209,12 @@ final class Cmm4eElementorWidget extends Widget_Base
             $theme_meta = (array)get_post_meta($menu_theme->ID, MenuThemeMeta::META_KEY, true);
             $menu_style = !empty($theme_meta['menubar_style']) ? $theme_meta['menubar_style'] : 'horizontal';
             if ('horizontal' === $menu_style) {
-                $horizontal_layout = !empty($theme_meta['menubar_horizontal_layout']) ? $theme_meta['menubar_horizontal_layout'] : 'horizontal-align-left';
+                $horizontal_layout = !empty($theme_meta['menubar_horizontal_layout']) ? $theme_meta['menubar_horizontal_layout'] : 'horizontal-align-right';
                 $menu_style_classes .= ' cmm4e-horizontal cmm4e-' . $horizontal_layout;
             } else {
                 $menu_style_classes .= ' cmm4e-vertical';
             }
-            $mobile_style = !empty($theme_meta['mobile_menu_style']) ? $theme_meta['mobile_menu_style'] : 'slide-down';
+            $mobile_style = !empty($theme_meta['mobile_menu_style']) ? $theme_meta['mobile_menu_style'] : 'off-canvas';
             if ('off-canvas' === $mobile_style) {
                 $menu_style_classes .= ' cmm4e-mobile-animation-off-canvas';
                 $menu_style_classes .= ' cmm4e-off-canvas-' . $theme_meta['mobile_offcanvas_position'];
@@ -232,7 +238,8 @@ final class Cmm4eElementorWidget extends Widget_Base
                 'down'  => $theme_meta['general_arrow_down'],
                 'left'  => $theme_meta['general_arrow_left'],
                 'right' => $theme_meta['general_arrow_right']
-            ]
+            ],
+            'maxHeight' => $theme_meta['menubar_menu_height']
         ];
 
         if ('horizontal' === $menu_style) {
@@ -256,7 +263,7 @@ final class Cmm4eElementorWidget extends Widget_Base
             'toggleMenuText'  => $theme_meta['mobile_menu_toggle_text']
         ];
 
-        $config = "data-config='" . esc_js(json_encode($config)) . "'";
+        $config = "data-config='" . esc_js(json_encode($config, JSON_UNESCAPED_UNICODE)) . "'";
 
         $items_wrap = $settings['se_markup'] ? '<ul id="%1$s" class="%2$s" ' . $config . ' itemscope itemtype="https://schema.org/SiteNavigationElement">%3$s</ul>' : '<ul id="%1$s" class="%2$s" ' . $config . '>%3$s</ul>';
 
