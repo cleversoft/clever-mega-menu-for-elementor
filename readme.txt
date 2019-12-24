@@ -4,18 +4,17 @@ License: GPLv2+
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: navigation menu, elementor, mega menu, flyout menu, wordpress mega menu
 Requires at least: 4.7
-Tested up to: 5.3.1
-Stable tag: 1.0.9
+Tested up to: 5.3.2
+Stable tag: 1.1.0
 
 
 == Description ==
 
 PLEASE DO NOT ASK FOR MAKING THIS PLUGIN TO WORK WITH ELEMENTOR PRO'S NAV MENU WIDGET!
 
-The Nav Menu widget of Elementor Pro is not designed for mega menus. We also SHOULD NOT override behaviors of Elementor Pro widgets. This plugin has its own widget and behaviors.
+The Nav Menu widget of Elementor Pro is not designed for mega menus. We also SHOULD NOT override behaviors of Elementor Pro widgets. This plugin has its own widgets and behaviors.
 
-
-Even though this plugin is easy to use, we can't guarantee rendered menu layout will fit any theme because we can't control every single CSS rule of themes and other plugins. This plugin is just a tool for theme designers and theme developers.
+We also don't guarantee rendered menus will fit every theme because we can't control every single CSS rule of themes and other plugins. This plugin is just a tool for theme developers.
 
 Works best on [Hello Theme](https://wordpress.org/themes/hello-elementor/) from [Elementor.com](https://elementor.com/).
 
@@ -73,6 +72,15 @@ For other questions, feel free to get help at the [plugin support](https://wordp
 For more info, please check out the [this documentation](https://doc.cleveraddon.com/clever-mega-menu-elementor).
 
 == Changelog ==
+
+= 1.1.0 - December 21, 2019 =
+
+* Enhanced mobile layout on Astra theme.
+* Added mobile toggle flex alignment option.
+
+= 1.0.9 - December 13, 2019 =
+
+* Fixed menu skins are not enqueued on OceanWP theme.
 
 = 1.0.8 - December 9, 2019 =
 
