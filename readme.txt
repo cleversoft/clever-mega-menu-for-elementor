@@ -4,25 +4,43 @@ License: GPLv2+
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: navigation menu, elementor, mega menu, flyout menu, wordpress mega menu
 Requires at least: 4.7
-Tested up to: 5.3.2
-Stable tag: 1.1.0
+Tested up to: 5.4.2
+Stable tag: 1.1.1
 
 
 == Description ==
 
-PLEASE DO NOT ASK FOR MAKING THIS PLUGIN TO WORK WITH ELEMENTOR PRO'S NAV MENU WIDGET!
+* Clever Mega Menu for Elementor (aka @CMM4E) is a top-notch mega menu extension for Elementor. It allows you creating a fully responsive mega menu with dropdown items, rich in content modules, all the process clear and easy.
 
-The Nav Menu widget of Elementor Pro is not designed for mega menus. We also SHOULD NOT override behaviors of Elementor Pro widgets. This plugin has its own widgets and behaviors.
+== IMPORTANT NOTES ==
+* **Clever Mega Menu for Elementor will not automatically adopt the style of your theme**, unless your theme has an CMM4E-specific stylesheet. You’ll need to customize the styles on your own to recreate it if that’s what you want.
+* Please DO NOT ask for making this plugin to work with **Elementor Pro's Nav Menu** Widget!
+* The **Elementor Pro's Nav Menu** widget is not designed for mega menus. We also SHOULD NOT override behaviors of Elementor Pro widgets. This plugin has its own widgets and behaviors.
 
-We also don't guarantee rendered menus will fit every theme because we can't control every single CSS rule of themes and other plugins. This plugin is just a tool for theme developers.
 
-Works best on [Hello Theme](https://wordpress.org/themes/hello-elementor/) from [Elementor.com](https://elementor.com/).
+See [Demo](http://cmm4e.wp1.zootemplate.com/) and [Online Documentation](https://doc.cleveraddon.com/clever-mega-menu-elementor) for more info.
 
-See [Demo](http://cmm4e.wp1.zootemplate.com/) and [online documentation](https://doc.cleveraddon.com/clever-mega-menu-elementor) for more info.
+=== How to install plugin ===
 
-https://www.youtube.com/watch?v=LJhrsXZh3Os
+https://www.youtube.com/watch?v=HkZ0_mbSNnk
 
-###Key Features:
+=== How To Create Menu Location ===
+
+https://www.youtube.com/watch?v=ElGiGNUOLUs
+
+=== How To Create Horizontal Menu ===
+
+https://www.youtube.com/watch?v=J1xNC0hhdsM
+
+=== How To Create Vertical Menu ===
+
+https://www.youtube.com/watch?v=WwlhjC6oy3Y
+
+=== How To Create Menu Skin ===
+
+https://www.youtube.com/watch?v=WwlhjC6oy3Y
+
+== CMM4E Lite Features ==
 
 * RTL ready
 * Selective menu icons
@@ -39,7 +57,7 @@ https://www.youtube.com/watch?v=LJhrsXZh3Os
 * Multiple menu locations with their own configuration
 * Supercharge menus with more than 100 menu skin options
 
-####Pro Features:
+== CMM4E Pro Features ==
 
 * SEO ready
 * Vertical menus
@@ -54,10 +72,12 @@ https://www.youtube.com/watch?v=LJhrsXZh3Os
 * Advanced mega panel options
 * Roles & restrictions for menu items
 
-####Help & Support
+== Help & Support ==
+
 If you have any issue, feel free to get help at [Plugin Support](https://wordpress.org/support/plugin/clever-mega-menu-for-elementor/). We really appreciate your feedbacks.
 
 == Frequently Asked Questions ==
+
 >Q: Do I have to purchase Elementor Pro to use this plugin?
 
 >A: No, Clever Mega Menu for Elementor is for [FREE version Elementor Page Builder](https://wordpress.org/plugins/elementor/).
@@ -68,10 +88,15 @@ If you have any issue, feel free to get help at [Plugin Support](https://wordpre
 
 For other questions, feel free to get help at the [plugin support](https://wordpress.org/support/plugin/clever-mega-menu-for-elementor/) section.
 
-= Further Reading =
-For more info, please check out the [this documentation](https://doc.cleveraddon.com/clever-mega-menu-elementor).
+== Looking for premium elementor addons and widgets? ==
+
+Check [Clever Addons for Elementor](https://cleveraddon.com/clever-addon-for-elementor/). It is a library of creative and unique Elementor widgets that add more functionality and flexibility to your favorite page builder.
 
 == Changelog ==
+
+= 1.1.1 - June 11, 2020 =
+
+* Fixed: Compatible with Elementor latest version.
 
 = 1.1.0 - December 21, 2019 =
 
