@@ -94,6 +94,10 @@ Check [Clever Addons for Elementor](https://cleveraddon.com/clever-addon-for-ele
 
 == Changelog ==
 
+= 1.1.2 - June 24, 2020 =
+
+* Fixed: The mega menu panel has been called correctly
+
 = 1.1.1 - June 11, 2020 =
 
 * Fixed: Compatible with Elementor latest version.
